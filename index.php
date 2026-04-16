@@ -1,9 +1,9 @@
 <?php
-include_once("Models/Product.php");
+include_once("database.php");
 
-$allProducts = getAllProducts();
-
-
+$db = new Database();
+$allProducts = $db->getAllProducts();
+$allCategories = $db->getAllCategories();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,9 @@ $allProducts = getAllProducts();
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#!">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" href="#!">En cat</a></li>
+                                <?php foreach($allCategories as $category){ ?>
+                                    <li><a class="dropdown-item" href="#!"><?php echo htmlspecialchars($category); ?></a></li>
+                                <?php } ?>
                             </ul> 
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>
@@ -74,9 +76,9 @@ $allProducts = getAllProducts();
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder"><?php echo $product->title; ?></h5>
-                                    <!-- Product price-->
-                                    SEK <?php echo $product->price; ?>
+                                    <h5 class="fw-bolder"><?php echo htmlspecialchars($product->title); ?></h5>
+                                    <!-- Product rating -->
+                                    Betyg: <?php echo htmlspecialchars($product->price); ?>
                                 </div>
                             </div>
                             <!-- Product actions-->

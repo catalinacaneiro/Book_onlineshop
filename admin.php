@@ -1,7 +1,8 @@
 <?php
-include_once("Models/Product.php")
+include_once("database.php");
 
-
+$db = new Database();
+$allProducts = $db->getAllProducts();
 ?>
 
 <!DOCTYPE html>
@@ -62,28 +63,21 @@ include_once("Models/Product.php")
         <div class="container px-4 px-lg-5 mt-5">
             <table class="table">
                 <thead>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Stock level</th>
-                        <th>action</th>
+                        <th>ID</th>
+                        <th>Namn</th>
+                        <th>Kategori</th>
+                        <th>Betyg</th>
                 </thead>
 
                 <tbody>
+                    <?php foreach($allProducts as $product){ ?>
                     <tr>
-                        <td>Test</td>
-                        <td>Cars</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td><a class="btn btn-primary">Edit</a></td>
+                        <td><?php echo htmlspecialchars($product->id); ?></td>
+                        <td><?php echo htmlspecialchars($product->title); ?></td>
+                        <td><?php echo htmlspecialchars($product->categoryName); ?></td>
+                        <td><?php echo htmlspecialchars($product->price); ?></td>
                     </tr>
-                    <tr>
-                        <td>Test2</td>
-                        <td>Cars</td>
-                        <td>22</td>
-                        <td>12</td>
-                        <td><a class="btn btn-primary">Edit</a></td>
-                    </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
