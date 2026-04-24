@@ -3,7 +3,9 @@ class Product{
     public $id;
     public $title;
     public $price;
-    public $stockLevel;
-    public $categoryName;
+    public $stock_quantity;
+    public $category_id;
+    public $category_name; 
+    public $popularity_product; 
 }
 ?>

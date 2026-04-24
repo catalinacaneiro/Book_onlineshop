@@ -1,9 +1,15 @@
 <?php
-include_once("database.php");
+require_once("Models/database.php");
+require_once("Models/ProductRepository.php");
+require_once("Models/CategoryRepository.php");
+
 
 $db = new Database();
-$allProducts = $db->getAllProducts();
-$allCategories = $db->getAllCategories();
+$productRepo = new ProductRepository($db->pdo);
+$allProducts = $productRepo->getAllProducts();
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +31,7 @@ $allCategories = $db->getAllCategories();
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/index.php">SuperShoppen</a>
+                <a class="navbar-brand" href="/index.php">The Quill Bookshop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -41,6 +47,7 @@ $allCategories = $db->getAllCategories();
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Create account</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                     </ul>
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
@@ -56,7 +63,7 @@ $allCategories = $db->getAllCategories();
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Super shoppen</h1>
+                    <h1 class="display-4 fw-bolder">The Quill Bookshop</h1>
                     <p class="lead fw-normal text-white-50 mb-0">Handla massa onödigt hos oss!</p>
                 </div>
             </div>
@@ -76,9 +83,11 @@ $allCategories = $db->getAllCategories();
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
+                                     <a href="product.page.php?id=<?php echo $product->id ?>">
                                     <h5 class="fw-bolder"><?php echo htmlspecialchars($product->title); ?></h5>
                                     <!-- Product rating -->
-                                    Betyg: <?php echo htmlspecialchars($product->price); ?>
+                                    Price: <?php echo htmlspecialchars($product->price); ?>
+                                    </a>
                                 </div>
                             </div>
                             <!-- Product actions-->

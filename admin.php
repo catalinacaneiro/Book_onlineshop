@@ -1,8 +1,11 @@
 <?php
-include_once("database.php");
+require_once("Models/database.php");
+require_once("Models/ProductRepository.php");
+
 
 $db = new Database();
-$allProducts = $db->getAllProducts();
+$productRepo = new ProductRepository($db->pdo);
+$allProducts = $productRepo->getAllProducts();
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +69,8 @@ $allProducts = $db->getAllProducts();
                         <th>ID</th>
                         <th>Namn</th>
                         <th>Kategori</th>
-                        <th>Betyg</th>
+                        <th>Pris</th>
+                        <th>Popularitet</th>
                 </thead>
 
                 <tbody>
@@ -74,8 +78,9 @@ $allProducts = $db->getAllProducts();
                     <tr>
                         <td><?php echo htmlspecialchars($product->id); ?></td>
                         <td><?php echo htmlspecialchars($product->title); ?></td>
-                        <td><?php echo htmlspecialchars($product->categoryName); ?></td>
+                        <td><?php echo htmlspecialchars($product->category_name); ?></td>
                         <td><?php echo htmlspecialchars($product->price); ?></td>
+                        <td><?php echo htmlspecialchars($product->popularity_product); ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
@@ -84,7 +89,7 @@ $allProducts = $db->getAllProducts();
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Shop 2025</p></div>
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Caneiro</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
