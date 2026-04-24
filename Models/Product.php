@@ -7,5 +7,6 @@ class Product{
     public $category_id;
     public $category_name; 
     public $popularity_product; 
+    public $description; 
 }
 ?>

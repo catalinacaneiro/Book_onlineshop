@@ -81,6 +81,7 @@ $allProducts = $productRepo->getAllProducts();
                         <td><?php echo htmlspecialchars($product->category_name); ?></td>
                         <td><?php echo htmlspecialchars($product->price); ?></td>
                         <td><?php echo htmlspecialchars($product->popularity_product); ?></td>
+                        <td><?php echo htmlspecialchars($product->description); ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

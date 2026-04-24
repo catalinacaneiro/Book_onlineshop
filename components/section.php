@@ -15,7 +15,7 @@
                                      <a href="product.page.php?id=<?php echo $product->id ?>">
                                     <h5 class="fw-bolder"><?php echo htmlspecialchars($product->title); ?></h5>
                                     <!-- Product rating -->
-                                    Price: <?php echo htmlspecialchars($product->price); ?>
+                                     <?php echo htmlspecialchars($product->description); ?>
                                     </a>
                                 </div>
                             </div>
