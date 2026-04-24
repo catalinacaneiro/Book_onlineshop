@@ -6,8 +6,9 @@ require_once("Models/CategoryRepository.php");
 
 $db = new Database();
 $productRepo = new ProductRepository($db->pdo);
+$categoryRepo = new CategoryRepository($db->pdo);
 $allProducts = $productRepo->getAllProducts();
-
+$allCategories = $categoryRepo->getAllCategories();
 
 
 ?>
@@ -28,84 +29,11 @@ $allProducts = $productRepo->getAllProducts();
         <link href="/css/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/index.php">The Quill Bookshop</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kategorier</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <?php foreach($allCategories as $category){ ?>
-                                    <li><a class="dropdown-item" href="#!"><?php echo htmlspecialchars($category); ?></a></li>
-                                <?php } ?>
-                            </ul> 
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Create account</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                    </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">The Quill Bookshop</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Handla massa onödigt hos oss!</p>
-                </div>
-            </div>
-        </header>
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <?php 
-                    foreach($allProducts as $product){
-                    ?> 
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                     <a href="product.page.php?id=<?php echo $product->id ?>">
-                                    <h5 class="fw-bolder"><?php echo htmlspecialchars($product->title); ?></h5>
-                                    <!-- Product rating -->
-                                    Price: <?php echo htmlspecialchars($product->price); ?>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </div> 
-        </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Shop 2025</p></div>
-        </footer>
+        <?php require_once("components/nav.php"); ?>
+        <?php require_once("components/header.php"); ?>
+        <?php require_once("components/section.php"); ?>
+        <?php require_once("components/footer.php"); ?>
+       
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
