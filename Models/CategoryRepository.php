@@ -11,5 +11,8 @@ class CategoryRepository {
     function getAllCategories(){
         return $this->pdo->query('SELECT * FROM category')->fetchAll(PDO::FETCH_CLASS, 'Category');
     }
+
+   
+
 }
 ?>

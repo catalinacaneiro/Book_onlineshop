@@ -1,42 +1,26 @@
 <?php
 require_once("Models/database.php");
-require_once("Models/ProductRepository.php");
-require_once("Models/CategoryRepository.php");
+require_once("utils/router.php");
 
+$database = new Database();
 
-$db = new Database();
-$productRepo = new ProductRepository($db->pdo);
-$categoryRepo = new CategoryRepository($db->pdo);
-$allProducts = $productRepo->getAllProducts();
-$allCategories = $categoryRepo->getAllCategories();
-
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <?php require_once("components/nav.php"); ?>
-        <?php require_once("components/header.php"); ?>
-        <?php require_once("components/section.php"); ?>
-        <?php require_once("components/footer.php"); ?>
-       
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
-</html>
+$router = new Router();
+$router->addRoute('/', function () {
+    require_once( __DIR__ . '/pages/start.page.php');
+});
+$router->addRoute('/index.php', function () {
+    require_once( __DIR__ . '/pages/start.page.php');
+});
+$router->addRoute('/product', function () {
+    require_once( __DIR__ . '/pages/product.page.php');
+});
+$router->addRoute('/category', function () {
+    require_once( __DIR__ . '/pages/category.page.php');
+});
+$router->addRoute('/admin', function () {
+    require_once( __DIR__ . '/pages/admin.php');
+});
+$router->addRoute('/search', function () {
+    require_once( __DIR__ . '/pages/search.page.php');
+});
+$router->dispatch();

@@ -49,5 +49,19 @@ class ProductRepository {
         return $this->pdo->lastInsertId();
                    
     }
+
+
+     function getProductsForCategory($category_id){
+        $query = $this->pdo->prepare(
+            "SELECT id, category_id, description, title, price, stock_quantity 
+            FROM products 
+            WHERE category_id = :category_id");
+
+        $query->execute(['category_id' => $category_id]);
+
+        return $query->fetchAll(PDO::FETCH_CLASS, "Product");
+
+        
+    }
 }
 ?>

@@ -1,3 +1,19 @@
+<?php
+require_once("Models/database.php");
+require_once("Models/ProductRepository.php");
+require_once("Models/CategoryRepository.php");
+
+
+$db = new Database();
+$productRepo = new ProductRepository($db->pdo);
+$categoryRepo = new CategoryRepository($db->pdo);
+$allProducts = $productRepo->getAllProducts();
+$allCategories = $categoryRepo->getAllCategories();
+
+?>
+
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="/index.php">The Quill Bookshop</a>
@@ -7,11 +23,20 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><a class="dropdown-item" href="/">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <?php foreach($allCategories as $category){ ?>
-                                    <li><a class="dropdown-item" href="#!"><?php echo htmlspecialchars($category->category_name); ?></a></li>
-                                <?php } ?>
+                                <?php 
+                                foreach($allCategories as $category){
+                                    ?>
+                                    <li><a class="dropdown-item" 
+                                        href="/category?id=<?php echo $category->id; ?>">
+                                        <?php echo $category->category_name;?>
+                                        </a>
+                                    </li>
+                                <?php 
+                                }
+                                ?>
+           
                             </ul> 
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>

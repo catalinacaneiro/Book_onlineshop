@@ -12,7 +12,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                     <a href="product.page.php?id=<?php echo $product->id ?>">
+                                     <a href="/product?id=<?php echo $product->id ?>">
                                     <h5 class="fw-bolder"><?php echo htmlspecialchars($product->title); ?></h5>
                                     <!-- Product rating -->
                                      <?php echo htmlspecialchars($product->description); ?>
