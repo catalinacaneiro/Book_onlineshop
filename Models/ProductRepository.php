@@ -76,5 +76,11 @@ class ProductRepository {
         $prep->execute(['q' => '%' . $q . '%']);
         return $prep->fetchAll(PDO::FETCH_CLASS, "Product");
     }
+
+
+      function getPopularProducts(){
+            $query = $this->pdo->query("SELECT * FROM products ORDER BY popularity_product DESC LIMIT 0,10"); // Products är TABELL 
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Product'); // Product är PHP Klass
+        }
 }
 ?>

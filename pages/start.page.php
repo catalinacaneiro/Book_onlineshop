@@ -6,7 +6,7 @@ require_once("Models/CategoryRepository.php");
 $db = new Database();
 $productRepo = new ProductRepository($db->pdo);
 $categoryRepo = new CategoryRepository($db->pdo);
-$allProducts = $productRepo->getAllProducts();
+$popularProduct = $productRepo->getPopularProducts();
 $allCategories = $categoryRepo->getAllCategories();
 ?>
 
