@@ -63,5 +63,18 @@ class ProductRepository {
 
         
     }
+
+    function searchBooks($q){
+        $prep = $this->pdo->prepare(
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name
+             FROM products p
+             LEFT JOIN category c ON c.id = p.category_id
+             WHERE p.title LIKE :q OR p.description LIKE :q OR c.category_name LIKE :q
+             ORDER BY p.title ASC"
+        );
+
+        $prep->execute(['q' => '%' . $q . '%']);
+        return $prep->fetchAll(PDO::FETCH_CLASS, "Product");
+    }
 }
 ?>

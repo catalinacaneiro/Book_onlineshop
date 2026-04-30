@@ -20,6 +20,7 @@ $allCategories = $categoryRepo->getAllCategories();
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <!-- DROPDOWN - Categories -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -43,6 +44,17 @@ $allCategories = $categoryRepo->getAllCategories();
                         <li class="nav-item"><a class="nav-link" href="#!">Create account</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                     </ul>
+
+                    <!-- SÖKNING - form  -->
+                     <form method="get" action="/search">
+                        <div class="input-group">
+                            <input name="q" class="form-control" type="search" placeholder="Search for..." aria-label="Search for..." />
+                            <button type="submit" class="btn btn-outline-secondary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </form>
+        
+
+                    <!-- VARUKORG - form -->
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
