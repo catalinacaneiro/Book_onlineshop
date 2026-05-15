@@ -19,6 +19,26 @@ class ProductRepository {
     return $products;
     }
 
+    function getAllProductsSorted($sort, $order){
+        if (!in_array($sort, ['title', 'price', 'stock_quantity'], true)) {
+            $sort = 'title';
+        }
+
+        $order = strtolower($order);
+        if (!in_array($order, ['asc', 'desc'], true)) {
+            $order = 'asc';
+        }
+
+        $query = $this->pdo->query(
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name
+             FROM products p
+             LEFT JOIN category c ON c.id = p.category_id
+             ORDER BY p.$sort $order"
+        );
+
+        return $query->fetchAll(PDO::FETCH_CLASS, "Product");
+    }
+
 
     function getProduct($id){
         $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
@@ -51,11 +71,20 @@ class ProductRepository {
     }
 
 
-     function getProductsForCategory($category_id){
+     function getProductsForCategory($category_id, $sort, $order){
+        /* RISK FÖR SQL INJECTION  */
+        
+        if (!in_array($sort, ['title',  'price'])) {
+            $sort = 'title';
+        }
+        if (!in_array($order, ['asc', 'desc'])) {
+            $order = 'asc';
+        }
+        
         $query = $this->pdo->prepare(
             "SELECT id, category_id, description, title, price, stock_quantity 
             FROM products 
-            WHERE category_id = :category_id");
+            WHERE category_id = :category_id ORDER BY $sort $order");
 
         $query->execute(['category_id' => $category_id]);
 

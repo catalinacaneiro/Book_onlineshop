@@ -23,4 +23,10 @@ $router->addRoute('/admin', function () {
 $router->addRoute('/search', function () {
     require_once( __DIR__ . '/pages/search.page.php');
 });
+$router->addRoute('/allProducts', function () {
+    require_once( __DIR__ . '/pages/allProducts.page.php');
+});
+$router->addRoute('/edit', function () {
+    require_once( __DIR__ . '/pages/edit.php');
+});
 $router->dispatch();

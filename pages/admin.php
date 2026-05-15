@@ -1,12 +1,3 @@
-<?php
-require_once("Models/database.php");
-require_once("Models/ProductRepository.php");
-
-
-$db = new Database();
-$productRepo = new ProductRepository($db->pdo);
-$allProducts = $productRepo->getAllProducts();
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +14,28 @@ $allProducts = $productRepo->getAllProducts();
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
     </head>
+
     <body>
+
+        <?php
+        require_once("Models/database.php");
+        require_once("Models/ProductRepository.php");
+
+
+
+        $db = new Database();
+        $productRepo = new ProductRepository($db->pdo);
+
+        $sort = $_GET['sort'] ?? 'title';
+        $order = $_GET['order'] ?? 'asc'; 
+        
+        $allProducts = $productRepo->getAllProductsSorted($sort, $order);
+        ?>
+
+
         <!-- Navigation-->
+
+        <!-- MÅSTE ÄNDRA  -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="/index.php">SuperShoppen</a>
@@ -54,40 +65,57 @@ $allProducts = $productRepo->getAllProducts();
         </nav>
         <!-- Header-->
         <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Super shoppen</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Handla massa onödigt hos oss!</p>
-                </div>
-            </div>
+            <?php require_once("components/header.php")?>
         </header>
+
+
         <!-- Section-->
-        <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
+         <div>
+            <h1>ADMIN</h1>
+
+            <form method="get" action="/admin">
+                <select name="sort" id="">
+                    <option value="title" <?php echo $sort === 'title' ? 'selected' : ''; ?>>Title</option>
+                    <option value="price" <?php echo $sort === 'price' ? 'selected' : ''; ?>>Price</option>
+                    <option value="stock_quantity" <?php echo $sort === 'stock_quantity' ? 'selected' : ''; ?>>Stock</option>
+                </select>
+
+                <select name="order" id="">
+                    <option value="asc" <?php echo $order === 'asc' ? 'selected' : ''; ?>>ASC</option>
+                    <option value="desc" <?php echo $order === 'desc' ? 'selected' : ''; ?>>DESC</option>
+                </select>
+                
+                <button type="submit">Sort</button>
+            </form>
+            
             <table class="table">
                 <thead>
-                        <th>ID</th>
-                        <th>Namn</th>
-                        <th>Kategori</th>
-                        <th>Pris</th>
-                        <th>Popularitet</th>
-                </thead>
-
-                <tbody>
-                    <?php foreach($allProducts as $product){ ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($product->id); ?></td>
-                        <td><?php echo htmlspecialchars($product->title); ?></td>
-                        <td><?php echo htmlspecialchars($product->category_name); ?></td>
-                        <td><?php echo htmlspecialchars($product->price); ?></td>
-                        <td><?php echo htmlspecialchars($product->popularity_product); ?></td>
-                        <td><?php echo htmlspecialchars($product->description); ?></td>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Edit</th>
                     </tr>
-                    <?php } ?>
+                </thead>
+                <tbody>
+                    <?php foreach ($allProducts as $product) { ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars(($product->id));?></td>
+                            <td><?php echo htmlspecialchars(($product->title));?></td>
+                            <td><?php echo htmlspecialchars(($product->category_name));?></td>
+                            <td><?php echo htmlspecialchars(($product->price));?></td>
+                            <td><?php echo htmlspecialchars(($product->stock_quantity));?></td>
+                            <td>
+                                <a href="/edit?id=<?php echo $product->id; ?>" class="btn btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                        <?php } ?>
                 </tbody>
             </table>
-        </div>
-        </section>
+         </div>
+        
         <!-- Footer-->
         <footer class="py-5 bg-dark">
         <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Caneiro</p></div>

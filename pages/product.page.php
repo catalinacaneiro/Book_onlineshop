@@ -1,10 +1,64 @@
-<html>
-    <!-- categories.php?sortOrder=asc&sortCol=name&page=40 -->
+<?php
+require_once("Models/database.php");
+require_once("Models/ProductRepository.php");
+require_once("Models/CategoryRepository.php");
+
+$db = new Database();
+$productRepo = new ProductRepository($db->pdo);
+$categoryRepo = new CategoryRepository($db->pdo);
+$allCategories = $categoryRepo->getAllCategories();
+
+$productId = $_GET['id'] ?? null;
+$product = null;
+
+if ($productId) {
+    $product = $productRepo->getProduct($productId);
+}
+ 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width='device-width', initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
 <body>
-    <h1>Du klickade på produkten med id: <?php echo $_GET['id'];
-    ?>
-    </h1>
-</body>    
+    <?php require_once("components/nav.php"); ?>
 
+    <?php if ($product) { ?>
+    <h1><?php echo htmlspecialchars($product->title); ?></h1>
 
+    <div>
+        <p><?php echo htmlspecialchars($product->description); ?></p>
+        <p>$<?php echo $product->price; ?></p>
+        <p>In stock: <?php echo $product->stock_quantity; ?></p>
+        <p>Category: <?php echo htmlspecialchars($product->category_name); ?></p>
+    </div>
+
+    <p>
+        <button class="btn btn-outline-dark" type="button">Add to cart</button>
+    </p>
+
+    <p>
+        <a href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
+    </p>
+    <?php } else { ?>
+    <h1>Product not found</h1>
+    <p>No product selected or this product does not exist.</p>
+    <p><a href="/allProducts">View all products</a></p>
+    <?php } ?>
+
+    <?php require_once("components/footer.php"); ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/scripts.js"></script>
+</body>
 </html>
+    
+    
+
+

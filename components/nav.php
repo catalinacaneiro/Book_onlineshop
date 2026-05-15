@@ -14,18 +14,25 @@ $allCategories = $categoryRepo->getAllCategories();
 
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/index.php">The Quill Bookshop</a>
+                <a class="navbar-brand fs-1" href="/index.php">Quills</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+                
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+
                         <!-- DROPDOWN - Categories -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/">All Products</a></li>
+                                <!-- Länk till allProducts.page.php - För att det ska funka ska man skapa en rout i index.php -->
+                                <li><a class="dropdown-item" href="/allProducts">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
+
+                                <!-- Länk till category sida -->
                                 <?php 
                                 foreach($allCategories as $category){
                                     ?>
@@ -46,18 +53,17 @@ $allCategories = $categoryRepo->getAllCategories();
                     </ul>
 
                     <!-- SÖKNING - form  -->
-                     <form method="get" action="/search">
+                     <form method="get" action="/search" class="d-flex m-3">
                         <div class="input-group">
-                            <input name="q" class="form-control" type="search" placeholder="Search for..." aria-label="Search for..." />
-                            <button type="submit" class="btn btn-outline-secondary" id="button-search" type="button">Go!</button>
+                            <input name="q" class="form-control rounded-0" type="search" placeholder="Type here to search" aria-label="Search for..." />
+                            <button type="submit" class="btn btn-outline-secondary rounded-0" id="button-search">Search</button>
                         </div>
                     </form>
         
 
                     <!-- VARUKORG - form -->
                     <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
+                        <button class="btn btn-outline-dark rounded-0" type="submit">
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>

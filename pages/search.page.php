@@ -26,6 +26,19 @@ $searchProduct = $productRepo->searchBooks($q);
 </head>
 <body>
     <?php require_once("components/nav.php"); ?>
+
+
+    <h1>Search : </h1>
+    
+    <?php foreach ($searchProduct as $product) { ?>  
+    <div>  
+        <h2><a href="/product?id=<?php echo (int)$product->id; ?>"><?php echo htmlspecialchars($product->title); ?></a></h2>  
+        <p>Price: <?php echo $product->description; ?></p>  
+        <p><?php echo $product->price; ?> kr</p>  
+    </div>  
+    <?php } ?>
+
+
     <?php require_once("components/footer.php"); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>
@@ -33,13 +46,3 @@ $searchProduct = $productRepo->searchBooks($q);
     
 </body>
 </html>
-
-<h1>Search : </h1>
-
-<?php foreach ($searchProduct as $product) { ?>  
-<div>  
-    <h2><?php echo htmlspecialchars($product->title); ?></h2>  
-    <p><?php echo $product->description; ?></p>  
-    <p><?php echo $product->price; ?> kr</p>  
-</div>  
-<?php } ?>
