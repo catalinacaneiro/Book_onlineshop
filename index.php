@@ -29,4 +29,7 @@ $router->addRoute('/allProducts', function () {
 $router->addRoute('/edit', function () {
     require_once( __DIR__ . '/pages/edit.php');
 });
+$router->addRoute('/about', function () {
+    require_once( __DIR__ . '/pages/about.page.php');
+});
 $router->dispatch();

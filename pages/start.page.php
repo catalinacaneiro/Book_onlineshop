@@ -32,4 +32,3 @@ $allCategories = $categoryRepo->getAllCategories();
     </body>
 </html>
 
-?>

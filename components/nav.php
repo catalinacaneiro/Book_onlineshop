@@ -12,17 +12,36 @@ $allCategories = $categoryRepo->getAllCategories();
 
 ?>
 
+<style>
+    .search-input::placeholder {
+        color: rgba(108, 117, 125, 0.45);
+    }
+</style>
+
 
 
 <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand fs-1" href="/index.php">Quills</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="w-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <a class="navbar-brand fs-1" href="/index.php">Quills</a>
+                        <!-- SÖKNING - form  -->
+                        <form method="get" action="/search" class="d-flex ms-auto me-3">
+                            <div class="input-group">
+                                <input name="q" class="form-control rounded-0 search-input" type="search" placeholder="Type here to search" aria-label="Search for..." />
+                                <button type="submit" class="btn btn-outline-secondary rounded-0" id="button-search">Search</button>
+                            </div>
+                        </form>
+                        <!-- VARUKORG - form -->
+                        <form class="d-flex">
+                            <button class="btn btn-outline-dark rounded-0" type="submit">
+                                Cart
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </button>
+                        </form>
+                    </div>
 
-                
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-
+                    <ul class="navbar-nav fs-6 flex-row gap-2 align-items-center">
                         <!-- DROPDOWN - Categories -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
@@ -44,30 +63,12 @@ $allCategories = $categoryRepo->getAllCategories();
                                 <?php 
                                 }
                                 ?>
-           
                             </ul> 
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Create account</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     </ul>
-
-                    <!-- SÖKNING - form  -->
-                     <form method="get" action="/search" class="d-flex m-3">
-                        <div class="input-group">
-                            <input name="q" class="form-control rounded-0" type="search" placeholder="Type here to search" aria-label="Search for..." />
-                            <button type="submit" class="btn btn-outline-secondary rounded-0" id="button-search">Search</button>
-                        </div>
-                    </form>
-        
-
-                    <!-- VARUKORG - form -->
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark rounded-0" type="submit">
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
                 </div>
             </div>
 </nav>

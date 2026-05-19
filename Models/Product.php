@@ -8,5 +8,6 @@ class Product{
     public $category_name; 
     public $popularity_product; 
     public $description; 
+    public $img; 
 }
 ?>
