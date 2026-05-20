@@ -1,26 +1,31 @@
-<?php 
-require_once ("Models/Product.php");
+<?php
+require_once("Models/Product.php");
 
 
 
-class ProductRepository {
-    private PDO $pdo; 
+class ProductRepository
+{
+    private PDO $pdo;
 
-    function __construct(PDO $pdo){
+    function __construct(PDO $pdo)
+    {
         $this->pdo = $pdo;
     }
 
 
- function getAllProducts(){
-    $query = $this->pdo->query("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
-    );
-    
-    $products = $query->fetchAll(PDO::FETCH_CLASS, "Product");
-    return $products;
+    function getAllProducts()
+    {
+        $query = $this->pdo->query(
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
+        );
+
+        $products = $query->fetchAll(PDO::FETCH_CLASS, "Product");
+        return $products;
     }
 
-    function getAllProductsSorted($sort, $order){
-        if (!in_array($sort, ['title', 'price', 'stock_quantity'], true)) {
+    function getAllProductsSorted($sort, $order)
+    {
+        if (!in_array($sort, ['id', 'title', 'price', 'stock_quantity'], true)) {
             $sort = 'title';
         }
 
@@ -40,25 +45,28 @@ class ProductRepository {
     }
 
 
-    function getProduct($id){
+    function getProduct($id)
+    {
         $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
 
         $prep->setFetchMode(PDO::FETCH_CLASS, "Product");
         $prep->execute(["id" => $id]);
         return $prep->fetch();
-        }
-    
-
-    function getProductByTitle($title){
-        $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
-        $prep->setFetchMode(PDO::FETCH_CLASS,'Product');
-        $prep->execute(['title'=> $title]); 
-        return  $prep->fetch();
     }
 
-    function addProduct($title,$price,$stock_quantity, $category_id){
+
+    function getProductByTitle($title)
+    {
+        $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
+        $prep->execute(['title' => $title]);
+        return $prep->fetch();
+    }
+
+    function addProduct($title, $price, $stock_quantity, $category_id)
+    {
         $prep = $this->pdo->prepare("INSERT INTO products (title, price, stock_quantity, category_id) VALUES (:title, :price, :stock_quantity, :category_id)");
-      
+
         $prep->execute([
             "title" => $title,
             "price" => $price,
@@ -67,33 +75,36 @@ class ProductRepository {
         ]);
 
         return $this->pdo->lastInsertId();
-                   
+
     }
 
 
-     function getProductsForCategory($category_id, $sort, $order){
+    function getProductsForCategory($category_id, $sort, $order)
+    {
         /* if sats för att skydda mot SQL injection  */
-        
-        if (!in_array($sort, ['title',  'price'])) {
+
+        if (!in_array($sort, ['title', 'price'])) {
             $sort = 'title';
         }
         if (!in_array($order, ['asc', 'desc'])) {
             $order = 'asc';
         }
-        
+
         $query = $this->pdo->prepare(
-            "SELECT id, category_id, description, title, price, stock_quantity 
+            "SELECT id, category_id, description, title, price, stock_quantity, img 
             FROM products 
-            WHERE category_id = :category_id ORDER BY $sort $order");
+            WHERE category_id = :category_id ORDER BY $sort $order"
+        );
 
         $query->execute(['category_id' => $category_id]);
 
         return $query->fetchAll(PDO::FETCH_CLASS, "Product");
 
-        
+
     }
 
-    function searchBooks($q){
+    function searchBooks($q)
+    {
         $prep = $this->pdo->prepare(
             "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name
              FROM products p
@@ -107,9 +118,27 @@ class ProductRepository {
     }
 
 
-      function getPopularProducts(){
-            $query = $this->pdo->query("SELECT * FROM products ORDER BY popularity_product DESC LIMIT 0,10"); // Products är TABELL 
-            return $query->fetchAll(PDO::FETCH_CLASS, 'Product'); // Product är PHP Klass
-        }
+    function getPopularProducts()
+    {
+        $query = $this->pdo->query("SELECT * FROM products ORDER BY popularity_product DESC LIMIT 0,10"); // Products är TABELL 
+        return $query->fetchAll(PDO::FETCH_CLASS, 'Product'); // Product är PHP Klass
+    }
+
+
+
+    function saveProduct($product)
+    {
+        $query = $this->pdo->prepare("UPDATE products SET title=:title, description=:description, price=:price, stock_quantity=:stock_quantity WHERE id=:id");
+        $query->execute([
+            'title' => $product->title,
+            'description' => $product->description,
+            'price' => $product->price,
+            'stock_quantity' => $product->stock_quantity,
+            'id' => $product->id
+        ]);
+    }
+
+
+    
 }
 ?>

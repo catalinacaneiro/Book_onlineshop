@@ -34,7 +34,7 @@ if ($productId) {
 
     <?php if ($product) { ?>
 
-        <section>
+        <section class="product-layout">
             <div class="product-category">
                 <h2><?php echo htmlspecialchars($product->category_name); ?></h2>
             </div>
@@ -54,12 +54,12 @@ if ($productId) {
                 <h1 class="product-title"><?php echo htmlspecialchars($product->title); ?></h1>
                 <p>In stock: <?php echo $product->stock_quantity; ?></p>
                 <p class="product-price">$<?php echo $product->price; ?></p>
-
+                
+                <p class="product-description"><?php echo htmlspecialchars($product->description); ?></p>
                 <div class="product-actions">
                     <button class="btn btn-outline-dark" type="button">Add to cart</button>
                     <a class="category-back" href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
                 </div>
-                <p class="product-description"><?php echo htmlspecialchars($product->description); ?></p>
 
                 <?php } else { ?>
                     <h1>Product not found</h1>
