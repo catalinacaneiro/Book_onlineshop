@@ -10,7 +10,19 @@
                     <div class="col mb-5 book-column">
                         <div class="card h-100 book-card">
                             <!-- Product image-->
-                            <img class="card-img-top book-img" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                             
+                            <?php
+                            $getImg = trim((string)($product->img ?? ''));
+                            if ($getImg !== '') {
+                                $imagePath = $getImg;
+                            }
+                       
+                            ?>
+
+
+                            <img class="card-img-top book-img" 
+                            src="<?php echo htmlspecialchars($imagePath)?>" 
+                            alt="<?php echo htmlspecialchars($product->title);?>" />
                             <!-- Product details-->
                             <div class="card-body book-body">
                                 <div class="text-center">

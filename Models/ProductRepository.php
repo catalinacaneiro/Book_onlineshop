@@ -12,7 +12,7 @@ class ProductRepository {
 
 
  function getAllProducts(){
-    $query = $this->pdo->query("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
+    $query = $this->pdo->query("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
     );
     
     $products = $query->fetchAll(PDO::FETCH_CLASS, "Product");
@@ -41,7 +41,7 @@ class ProductRepository {
 
 
     function getProduct($id){
-        $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
+        $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
 
         $prep->setFetchMode(PDO::FETCH_CLASS, "Product");
         $prep->execute(["id" => $id]);
@@ -50,7 +50,7 @@ class ProductRepository {
     
 
     function getProductByTitle($title){
-        $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
+        $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
         $prep->setFetchMode(PDO::FETCH_CLASS,'Product');
         $prep->execute(['title'=> $title]); 
         return  $prep->fetch();
@@ -72,7 +72,7 @@ class ProductRepository {
 
 
      function getProductsForCategory($category_id, $sort, $order){
-        /* RISK FÖR SQL INJECTION  */
+        /* if sats för att skydda mot SQL injection  */
         
         if (!in_array($sort, ['title',  'price'])) {
             $sort = 'title';
@@ -95,7 +95,7 @@ class ProductRepository {
 
     function searchBooks($q){
         $prep = $this->pdo->prepare(
-            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name
              FROM products p
              LEFT JOIN category c ON c.id = p.category_id
              WHERE p.title LIKE :q OR p.description LIKE :q OR c.category_name LIKE :q

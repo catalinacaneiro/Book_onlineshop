@@ -1,4 +1,8 @@
 <?php
+ob_start();
+
+session_start();
+
 require_once("Models/database.php");
 require_once("utils/router.php");
 
