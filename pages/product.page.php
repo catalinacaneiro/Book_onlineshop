@@ -45,28 +45,29 @@ if ($productId) {
             }
             ?>
             <div class="product-media">
-                <img class="product-cover"
-                src="<?php echo htmlspecialchars($imagePath) ?>" alt="<?php echo htmlspecialchars($product->title); ?>">
+                <img class="product-cover" src="<?php echo htmlspecialchars($imagePath) ?>"
+                    alt="<?php echo htmlspecialchars($product->title); ?>">
             </div>
 
-        
+
             <div class="product-info">
                 <h1 class="product-title"><?php echo htmlspecialchars($product->title); ?></h1>
-                <p>In stock: <?php echo $product->stock_quantity; ?></p>
                 <p class="product-price">$<?php echo $product->price; ?></p>
-                
+
                 <p class="product-description"><?php echo htmlspecialchars($product->description); ?></p>
+                <p>In stock: <?php echo $product->stock_quantity; ?></p>
                 <div class="product-actions">
                     <button class="btn btn-outline-dark" type="button">Add to cart</button>
-                    <a class="category-back" href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
+                    <a class="category-back btn btn-outline-dark"
+                        href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
                 </div>
 
-                <?php } else { ?>
-                    <h1>Product not found</h1>
-                    <p>No product selected or this product does not exist.</p>
-                    <p><a href="/allProducts">View all products</a></p>
-                <?php } ?>
-            </div>
+            <?php } else { ?>
+                <h1>Product not found</h1>
+                <p>No product selected or this product does not exist.</p>
+                <p><a href="/allProducts">View all products</a></p>
+            <?php } ?>
+        </div>
     </section>
 
     <?php require_once("components/footer.php"); ?>
