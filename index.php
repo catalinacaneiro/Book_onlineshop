@@ -1,7 +1,7 @@
 <?php
-ob_start();
+ob_start(); // startar output buffering. 
 
-session_start();
+session_start(); // återupptar en existenserande session. 
 
 require_once("Models/database.php");
 require_once("utils/router.php");
@@ -35,5 +35,9 @@ $router->addRoute('/edit', function () {
 });
 $router->addRoute('/about', function () {
     require_once( __DIR__ . '/pages/about.page.php');
+});
+
+$router->addRoute('/addToCart', function () {
+    require_once( __DIR__ . '/pages/addToCart.php');
 });
 $router->dispatch();
