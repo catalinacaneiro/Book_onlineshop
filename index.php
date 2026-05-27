@@ -36,7 +36,6 @@ $router->addRoute('/edit', function () {
 $router->addRoute('/about', function () {
     require_once( __DIR__ . '/pages/about.page.php');
 });
-
 $router->addRoute('/addToCart', function () {
     require_once( __DIR__ . '/pages/addToCart.php');
 });

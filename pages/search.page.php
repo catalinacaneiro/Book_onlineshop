@@ -53,8 +53,9 @@ $product = $productRepo->searchBooks($q)[0] ?? null;
 
                 <p class="product-description"><?php echo htmlspecialchars($product->description); ?></p>
                 <div class="product-actions">
-                    <button class="btn btn-outline-dark" type="button">Add to cart</button>
-                    <a class="category-back" href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
+                    <a class="btn btn-outline-dark" onclick="addToCart(<?php echo $product->id; ?>)">Add to cart</a>
+                    <a class="category-back btn btn-outline-dark"
+                        href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
                 </div>
 
             <?php } else { ?>

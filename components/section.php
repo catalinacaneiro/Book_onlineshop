@@ -12,6 +12,7 @@
                             <!-- Product image-->
                              
                             <?php
+                            $imagePath = '';
                             $getImg = trim((string)($product->img ?? ''));
                             if ($getImg !== '') {
                                 $imagePath = $getImg;

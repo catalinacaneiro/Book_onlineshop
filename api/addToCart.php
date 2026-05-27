@@ -12,7 +12,13 @@ $cart->addItem($productIdAddToCart, 1);
 
 echo "Add to cart ... "; 
 
+echo json_encode([
+    'success' => true, 
+    'message' => "Product $productIdAddToCart added to cart",
+    'cartItemCount' => $cart->getItemsCount(),
+    'cartTotalPrice' => $cart->getTotalPrice(),
+    'cartItems' => $cart->getItems(),
 
-
+]);
 ?>
 

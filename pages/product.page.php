@@ -56,8 +56,9 @@ if ($productId) {
 
                 <p class="product-description"><?php echo htmlspecialchars($product->description); ?></p>
                 <p>In stock: <?php echo $product->stock_quantity; ?></p>
+
                 <div class="product-actions">
-                    <button class="btn btn-outline-dark" type="button">Add to cart</button>
+                    <a class="btn btn-outline-dark" onclick="addToCart(<?php echo $product->id; ?>)">Add to cart</a>
                     <a class="category-back btn btn-outline-dark"
                         href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
                 </div>

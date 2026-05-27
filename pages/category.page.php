@@ -15,9 +15,19 @@ $allCategories = $categoryRepo->getAllCategories();
 
 
 //$categoryid kommer ju från URL  category.php?id=1
-$categoryid = $_GET['id'];
+$categoryid = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $sort = $_GET['sort'] ?? 'title';
 $order = $_GET['order'] ?? 'asc';
+
+if (!in_array($sort, ['title', 'price'], true)) {
+    $sort = 'title';
+}
+
+$order = strtolower($order);
+if (!in_array($order, ['asc', 'desc'], true)) {
+    $order = 'asc';
+}
+
 $selectedOption = $sort . '-' . $order;
 // select * from category where id=$categoryid
 $products = $productRepo->getProductsForCategory($categoryid, $sort, $order);
@@ -53,8 +63,7 @@ $allCategories = $categoryRepo->getAllCategories();
                     <!-- form för soretering  -->
                     <form class="d-flex justify-content-center mb-3" method="get" action="/category">
                         <input type="hidden" name="id" value="<?php echo $categoryid; ?>">
-                        <select class="form-select w-auto" name="sortorder" id="sortselect"
-                            onchange="this.form.submit()">
+                        <select class="form-select w-auto" id="sortselect" aria-label="Sort products">
                             <option value="title-asc" <?php echo $selectedOption === 'title-asc' ? 'selected' : ''; ?>>
                                 Title A-Z</option>
                             <option value="title-desc" <?php echo $selectedOption === 'title-desc' ? 'selected' : ''; ?>>
@@ -72,15 +81,14 @@ $allCategories = $categoryRepo->getAllCategories();
                     <div class="col mb-5 book-column">
                         <div class="card h-100 book-card">
                             <?php
-                            $imagePath = ""; 
+                            $imagePath = "";
                             $getImg = trim((string) ($product->img ?? ''));
                             if ($getImg !== '') {
                                 $imagePath = $getImg;
                             }
                             ?>
-                            <img class="card-img-top book-img" 
-                            src="<?php echo htmlspecialchars($imagePath) ?>"
-                            alt="<?php echo htmlspecialchars($product->title); ?>" />
+                            <img class="card-img-top book-img" src="<?php echo htmlspecialchars($imagePath) ?>"
+                                alt="<?php echo htmlspecialchars($product->title); ?>" />
 
 
                             <div class="card-body book-body">

@@ -35,7 +35,7 @@ class ProductRepository
         }
 
         $query = $this->pdo->query(
-            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, c.category_name
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name
              FROM products p
              LEFT JOIN category c ON c.id = p.category_id
              ORDER BY p.$sort $order"
@@ -83,10 +83,12 @@ class ProductRepository
     {
         /* if sats för att skydda mot SQL injection  */
 
-        if (!in_array($sort, ['title', 'price'])) {
+        if (!in_array($sort, ['title', 'price'], true)) {
             $sort = 'title';
         }
-        if (!in_array($order, ['asc', 'desc'])) {
+
+        $order = strtolower($order);
+        if (!in_array($order, ['asc', 'desc'], true)) {
             $order = 'asc';
         }
 
@@ -139,6 +141,6 @@ class ProductRepository
     }
 
 
-    
+
 }
 ?>
