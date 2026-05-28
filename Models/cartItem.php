@@ -2,11 +2,11 @@
 
 class CartItem {
     public $id;
-    public $productId;
+    public $product_id;
     public $quantity;
 
-    public $productName;
-    public $productPrice;
+    public $product_name;
+    public $product_price;
     public $rowPrice;
     public $price;
 };

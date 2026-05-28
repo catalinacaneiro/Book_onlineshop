@@ -20,3 +20,30 @@ if (sortSelect) {
     window.location.search = urlSearchParams.toString();
   });
 }
+
+async function addToCart(productId) { 
+    let resp = await fetch(`/javascriptAddToCart?id=${productId}`);
+    let data = await resp.json();
+    document.getElementById('cartItemCount').innerText = data.cartItemCount;
+
+    // document.getElementById('cartTotalPrice').innerText = data.cartTotalPrice; -> kommer att visa totala summan för alla produkter vi läller till i cart. MÅSTE VARA EVENTUELLT IF SATS 
+
+
+    // const carItemsElement IF SATS 
+
+
+    // 
+
+
+
+
+
+
+    // fetch(`/javascriptAddToCart?id=${productId}`)
+    // .then(response => response.json())
+    // .then(data => {
+    //         document.getElementById('cartItemCount').innerText = data.cartItemCount;
+    // });
+}
+
+
