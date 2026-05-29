@@ -8,7 +8,8 @@ class CategoryRepository {
         $this->pdo = $pdo;
     }
 
-    function getAllCategories(){
+    function getAllCategories(): array
+    {
         return $this->pdo->query('SELECT * FROM category')->fetchAll(PDO::FETCH_CLASS, 'Category');
     }
 

@@ -1,7 +1,6 @@
 <?php
-require_once("Models/database.php");
-require_once("Models/ProductRepository.php");
-require_once("Models/CategoryRepository.php");
+require_once("repositories/ProductRepository.php");
+require_once("repositories/CategoryRepository.php");
 
 $db = new Database();
 $productRepo = new ProductRepository($db->pdo);

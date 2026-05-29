@@ -3,7 +3,7 @@ ob_start(); // startar output buffering.
 
 session_start(); // återupptar en existenserande session. 
 
-require_once("Models/database.php");
+require_once("config/database.php");
 require_once("utils/router.php");
 
 $database = new Database();

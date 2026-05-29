@@ -11,7 +11,7 @@ class ProductRepository
     }
 
 
-    function getAllProducts()
+    function getAllProducts(): array
     {
         $query = $this->pdo->query(
             "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
@@ -21,7 +21,7 @@ class ProductRepository
         return $products;
     }
 
-    function getAllProductsSorted($sort, $order)
+    function getAllProductsSorted($sort, $order): array
     {
         if (!in_array($sort, ['id', 'title', 'price', 'stock_quantity'], true)) {
             $sort = 'title';
@@ -43,7 +43,7 @@ class ProductRepository
     }
 
 
-    function getProduct($id)
+    function getProduct($id): Product
     {
         $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
 
@@ -53,7 +53,7 @@ class ProductRepository
     }
 
 
-    function getProductByTitle($title)
+    function getProductByTitle($title): ?Product
     {
         $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
@@ -77,7 +77,7 @@ class ProductRepository
     }
 
 
-    function getProductsForCategory($category_id, $sort, $order)
+    function getProductsForCategory($category_id, $sort, $order): array
     {
         /* if sats för att skydda mot SQL injection  */
 
@@ -103,7 +103,7 @@ class ProductRepository
 
     }
 
-    function searchBooks($q)
+    function searchBooks($q): array
     {
         $prep = $this->pdo->prepare(
             "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name
@@ -118,7 +118,7 @@ class ProductRepository
     }
 
 
-    function getPopularProducts()
+    function getPopularProducts(): array
     {
         $query = $this->pdo->query("SELECT * FROM products ORDER BY popularity_product DESC LIMIT 0,10"); // Products är TABELL 
         return $query->fetchAll(PDO::FETCH_CLASS, 'Product'); // Product är PHP Klass

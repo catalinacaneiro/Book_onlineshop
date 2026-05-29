@@ -18,8 +18,8 @@
 <body>
 
     <?php
-    require_once("Models/database.php");
-    require_once("Models/ProductRepository.php");
+    require_once("config/database.php");
+    require_once("repositories/ProductRepository.php");
 
 
     $db = new Database();

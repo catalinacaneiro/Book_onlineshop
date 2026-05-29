@@ -1,7 +1,7 @@
 <?php
-require_once("Models/database.php");
-require_once("Models/ProductRepository.php");
-require_once("Models/CategoryRepository.php");
+require_once("config/database.php");
+require_once("repositories/ProductRepository.php");
+require_once("repositories/CategoryRepository.php");
 require_once("utils/validaring.php");
 
 $id = $_GET['id'] ?? null;
