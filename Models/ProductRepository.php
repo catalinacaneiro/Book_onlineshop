@@ -1,8 +1,6 @@
 <?php
 require_once("Models/Product.php");
 
-
-
 class ProductRepository
 {
     private PDO $pdo;

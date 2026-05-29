@@ -1,5 +1,4 @@
 <?php
-require_once("Models/Product.php");
 require_once("vendor/autoload.php");
 
 class Database {
