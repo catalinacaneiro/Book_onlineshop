@@ -124,17 +124,27 @@ class ProductRepository
         return $query->fetchAll(PDO::FETCH_CLASS, 'Product'); // Product är PHP Klass
     }
 
-
+     function createProduct($product){
+        // INSERT INTO
+        $query = $this->pdo->prepare("INSERT INTO products (title, price, stock_quantity, category_id, description) VALUES (:title, 0:price, :stock_quantity, :category_id, :descriptiton)");
+        $query->execute([
+            'title' => $product->title,
+            'price' => $product->price,
+            'stock_quantity' => $product->stockLevel,
+            'category_id' => $product->category_id,
+            'description' => $product->description
+        ]);
+    }
 
     function saveProduct($product)
     {
         $query = $this->pdo->prepare("UPDATE products SET title=:title, description=:description, price=:price, stock_quantity=:stock_quantity WHERE id=:id");
         $query->execute([
             'title' => $product->title,
-            'description' => $product->description,
             'price' => $product->price,
             'stock_quantity' => $product->stock_quantity,
-            'id' => $product->id
+            'id' => $product->id,
+            'description' => $product->description
         ]);
     }
 

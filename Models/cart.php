@@ -17,7 +17,8 @@ class Cart
     ) {
         $this->cartRepository = $cartRepository;
         $this->session_id = $session_id;
-
+        $this->user_id = $user_id;
+        
         $this->cartItems = $this->cartRepository->getCartItems($user_id, $session_id);
     }
 
@@ -118,6 +119,20 @@ class Cart
     {
         $this->cartItems = [];
     }
+
+
+    public function convertSessionToUser($user_id, $newSessionId)
+{
+    $this->cartRepository->convertSessionToUser
+    (
+        $this->session_id,
+        $user_id,
+        $newSessionId
+    );
+
+    $this->user_id = $user_id;
+    $this->session_id = $newSessionId;
+}
 
 }
 ?>
