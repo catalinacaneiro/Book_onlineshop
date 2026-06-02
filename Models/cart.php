@@ -1,4 +1,4 @@
-<!-- LOGIKEN TILL CART - LÄGGA TILL, TA BORT OSV.  -->
+<!-- LOGIKEN MED METODER TILL CART - LÄGGA TILL, TA BORT OSV.  -->
 
 <?php
 require_once("Models/cart_item.php");
@@ -71,6 +71,8 @@ class Cart
         }
     }
 
+
+// Vad denna metoden säger: "Leta efter en produkt i cart-arrayen" $this->cartItems = objekt i minnet 
     public function getCartItem($product_id)
     {
         foreach ($this->cartItems as $item) {

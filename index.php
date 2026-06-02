@@ -39,4 +39,8 @@ $router->addRoute('/about', function () {
 $router->addRoute('/addToCart', function () {
     require_once( __DIR__ . '/pages/addToCart.php');
 });
+
+$router->addRoute('/chat', function () {
+    require_once( __DIR__ . '/pages/chat.php');
+});
 $router->dispatch();
