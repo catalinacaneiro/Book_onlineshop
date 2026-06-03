@@ -10,37 +10,43 @@ $database = new Database();
 
 $router = new Router();
 $router->addRoute('/', function () {
-    require_once( __DIR__ . '/pages/start.page.php');
+    require_once(__DIR__ . '/pages/start.page.php');
 });
 $router->addRoute('/index.php', function () {
-    require_once( __DIR__ . '/pages/start.page.php');
+    require_once(__DIR__ . '/pages/start.page.php');
 });
 $router->addRoute('/product', function () {
-    require_once( __DIR__ . '/pages/product.page.php');
+    require_once(__DIR__ . '/pages/product.page.php');
 });
 $router->addRoute('/category', function () {
-    require_once( __DIR__ . '/pages/category.page.php');
+    require_once(__DIR__ . '/pages/category.page.php');
 });
 $router->addRoute('/admin', function () {
-    require_once( __DIR__ . '/pages/admin.php');
+    require_once(__DIR__ . '/pages/admin.php');
+});
+$router->addRoute('/admin/new', function () {
+    require_once(__DIR__ . '/pages/newProduct.php');
+});
+$router->addRoute('/admin/edit', function () {
+    require_once(__DIR__ . '/pages/edit.php');
 });
 $router->addRoute('/search', function () {
-    require_once( __DIR__ . '/pages/search.page.php');
+    require_once(__DIR__ . '/pages/search.page.php');
 });
 $router->addRoute('/allProducts', function () {
-    require_once( __DIR__ . '/pages/allProducts.page.php');
-});
-$router->addRoute('/edit', function () {
-    require_once( __DIR__ . '/pages/edit.php');
+    require_once(__DIR__ . '/pages/allProducts.page.php');
 });
 $router->addRoute('/about', function () {
-    require_once( __DIR__ . '/pages/about.page.php');
+    require_once(__DIR__ . '/pages/about.page.php');
 });
 $router->addRoute('/addToCart', function () {
-    require_once( __DIR__ . '/pages/addToCart.php');
+    require_once(__DIR__ . '/pages/addToCart.php');
+});
+$router->addRoute('/removeFromCart', function () {
+    require_once(__DIR__ . '/pages/removeFromCart.php');
+});
+$router->addRoute('/viewCart', function () {
+    require_once(__DIR__ . '/pages/viewCart.php');
 });
 
-$router->addRoute('/chat', function () {
-    require_once( __DIR__ . '/pages/chat.php');
-});
 $router->dispatch();

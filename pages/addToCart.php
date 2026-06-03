@@ -12,6 +12,8 @@ $cart->addItem($productIdAddToCart, 1);
 
 echo "Add to cart ... ";
 
-
+$fromPage = urldecode($_GET['fromPage'] ?? '/'); 
+echo $fromPage; 
+header("Location: $fromPage"); 
 
 ?>

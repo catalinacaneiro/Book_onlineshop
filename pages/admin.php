@@ -107,7 +107,11 @@
                             <td><?php echo htmlspecialchars(($product->price)); ?></td>
                             <td><?php echo htmlspecialchars(($product->stock_quantity)); ?></td>
                             <td>
-                                <a href="/edit?id=<?php echo $product->id; ?>" class="btn btn-primary">Edit</a>
+                                <a href="/admin/edit?id=<?php echo $product->id; ?>" class="btn btn-primary">Edit</a>
+                            </td>
+
+                            <td>
+                                <a href="/admin/new" class="btn btn-primary">Create new product</a>
                             </td>
                         </tr>
                     <?php } ?>

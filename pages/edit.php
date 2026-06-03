@@ -18,10 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $product) {
     $product->description = $_POST['description'];
     $product->price = $_POST['price'];
     $product->stock_quantity = $_POST['stock_quantity'];
+    $product->category_id = $_POST['category_id'] ?? null;
 
     $v->field('title')->required()->alpha_num([' '])->min_len(3)->max_len(50);
     $v->field('stock_quantity')->required()->numeric()->min_val(0);
     $v->field('price')->required()->numeric()->min_val(0);
+    $v->field('category_id')->required()->numeric()->min_val(1);
 
     if ($v->is_valid()) {
         $productRepo->saveProduct($product);
@@ -63,44 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $product) {
                         <h1 class="text-center mb-3">Edit Product</h1>
                         <p class="text-center mb-4"><?php echo htmlspecialchars($product->title); ?></p>
 
-                        <form method="POST" class="card p-4 shadow-sm">
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Title</label>
-                                <input type="text"
-                                    class="form-control <?php echo $v->get_error_message('title') ? 'is-invalid' : ''; ?>"
-                                    id="title" name="title" value="<?php echo htmlspecialchars($product->title); ?>">
-                                <span class="invalid-feedback d-block"><?php echo $v->get_error_message('title'); ?></span>
-                            </div>
+                        <?php
+                        $formAction = "";
+                        $buttonText = "Save";
 
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description" name="description"
-                                    rows="4"><?php echo htmlspecialchars($product->description); ?></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="number" step="0.01"
-                                    class="form-control <?php echo $v->get_error_message('price') ? 'is-invalid' : ''; ?>"
-                                    id="price" name="price" value="<?php echo htmlspecialchars($product->price); ?>">
-                                <span class="invalid-feedback d-block"><?php echo $v->get_error_message('price'); ?></span>
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="stock_quantity" class="form-label">Stock Level</label>
-                                <input type="number"
-                                    class="form-control <?php echo $v->get_error_message('stock_quantity') ? 'is-invalid' : ''; ?>"
-                                    id="stock_quantity" name="stock_quantity"
-                                    value="<?php echo htmlspecialchars($product->stock_quantity); ?>">
-                                <span
-                                    class="invalid-feedback d-block"><?php echo $v->get_error_message('stock_quantity'); ?></span>
-                            </div>
-
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <a href="/admin" class="btn btn-outline-secondary">Cancel</a>
-                            </div>
-                        </form>
+                        require("components/productForm.php");
+                        ?>
                     </div>
                 </div>
             <?php } ?>
