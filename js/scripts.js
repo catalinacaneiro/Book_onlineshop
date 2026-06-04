@@ -64,7 +64,7 @@ function drawCart(cartItems, cartTotalPrice, cartItemCount) {
   const cartTotalPriceElement = document.getElementById("cartTotalPrice");
   if (cartTotalPriceElement) {
     const totalNumber = Number(cartTotalPrice || 0);
-    cartTotalPriceElement.innerText = `${Math.round(totalNumber)} kr`;
+    cartTotalPriceElement.innerText = `$ ${Math.round(totalNumber)} `;
   }
 
   const cartCountElement = document.getElementById("cartItemCount");
@@ -112,7 +112,7 @@ function drawCart(cartItems, cartTotalPrice, cartItemCount) {
             <a class="qty-btn" href="/addToCart?id=${productId}&fromPage=${encodeURIComponent(window.location.pathname + window.location.search)}" onclick="addToCart(${productId}); return false;" aria-label="Increase quantity">+</a>
           </div>
         </td>
-        <td class="cart-subtotal">${Math.round(rowPrice)} kr</td>
+        <td class="cart-subtotal">$ ${Math.round(rowPrice)} </td>
       </tr>
     `;
   });

@@ -44,6 +44,9 @@ class Cart
             $product_id,
             $item->quantity
         );
+
+        // Ensure UI/API gets fresh title/price/rowPrice after updates.
+        $this->cartItems = $this->cartRepository->getCartItems($this->user_id, $this->session_id);
     }
 
     public function removeItem($product_id, $quantity)
@@ -63,14 +66,8 @@ class Cart
             $item->quantity
         );
 
-        if ($item->quantity <= 0) {
-
-            $this->cartItems = array_filter(
-                $this->cartItems,
-                fn($cartItem)
-                => $cartItem->product_id != $product_id
-            );
-        }
+        // Re-fetch cart so totals/subtotals are always in sync with DB.
+        $this->cartItems = $this->cartRepository->getCartItems($this->user_id, $this->session_id);
     }
 
 

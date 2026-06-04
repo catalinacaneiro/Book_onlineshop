@@ -1,34 +1,41 @@
 <?php
-require_once("../vendor/autoload.php");
-require_once("__DIR__.'/Models/cart.php");
-require_once("__DIR__.'/Models/cart_item.php");
-require_once("__DIR__.'/repositories/cartRepository.php");
-require_once("__DIR__.'/repositories/userRepository.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
+require_once(__DIR__ . "/../Models/cart.php");
+require_once(__DIR__ . "/../Models/cart_item.php");
+require_once(__DIR__ . "/../repositories/cartRepository.php");
+require_once(__DIR__ . "/../repositories/userRepository.php");
 
 
-$db = new Database(); 
-$cart = new Cart($db)
+$db = new Database();
+$cartRepository = new CartRepository($db->getPdo());
+$cart = new Cart($cartRepository, session_id());
+$cartItems = $cart->getItems();
 
+\Stripe\Stripe::setApiKey($_ENV['STRIPE_PRIVATE_KEY']);
 
-// skapar array med line items som stripe dera APIet kräver. 
-//$lineitems = [];
-// foreach($->getItems()) as $cartitem 
+$lineitems = [];
+foreach ($cart->getItems() as $cartItem) {
+    array_push($lineitems, [
+        "quantity" => $cartItem->quantity,
+        "price_data" => [
+            "currency" => "sek",
+            "unit_amount" => $cartItem->price * 100,
+            "product_data" => [
+                "name" => $cartItem->title
+            ]
+        ]
+    ]);
+}
+
+$checkout_session = \Stripe\Checkout\Session::create([
+    "mode" => "payment",
+    "success_url" => "http://localhost:8000/checkoutSuccess?session_id={CHECKOUT_SESSION_ID}",
+    "cancel_url" => "http://localhost:8000",
+    "locale" => "auto",
+    "line_items" => $lineitems
+]);
+
+http_response_code(303);
+header("Location: " . $checkout_session->url);
+
 ?>
-
-
-
-
-
-
-<aside class="cart-summary" aria-label="Basket totals">
-    <h2>Basket totals</h2>
-    <div class="cart-summary-line">
-        <span>Shipment</span>
-        <span>Shipping costs are calculated during checkout.</span>
-    </div>
-    <div class="cart-summary-line cart-summary-total">
-        <span>Total</span>
-        <span id="cartTotalPrice"><?php echo number_format((float) $cartTotal, 0, ",", " "); ?> kr</span>
-    </div>
-    <a href="/checkout" class="cart-checkout-btn">Proceed to checkout</a>
-</aside>

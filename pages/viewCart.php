@@ -83,7 +83,7 @@ $cartTotal = $cart->getTotalPrice();
                                             aria-label="Increase quantity">+</a>
                                     </div>
                                 </td>
-                                <td class="cart-subtotal"><?php echo number_format($rowTotal, 0, ",", " "); ?> kr</td>
+                                <td class="cart-subtotal">$<?php echo number_format($rowTotal, 0, ",", " "); ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -102,7 +102,7 @@ $cartTotal = $cart->getTotalPrice();
                 </div>
                 <div class="cart-summary-line cart-summary-total">
                     <span>Total</span>
-                    <span id="cartTotalPrice"><?php echo number_format((float) $cartTotal, 0, ",", " "); ?> kr</span>
+                    <span id="cartTotalPrice">$<?php echo number_format((float) $cartTotal, 0, ",", " "); ?></span>
                 </div>
                 <a href="/checkout" class="cart-checkout-btn">Proceed to checkout</a>
             </aside>
