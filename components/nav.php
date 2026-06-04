@@ -43,7 +43,7 @@ if (!isset($antalICarten)) {
                     </div>
                 </form>
                 <!-- VARUKORG - form -->
-                <form class="d-flex">
+                <form class="d-flex" method="get" action="/viewCart" >
                     <button class="btn btn-outline-dark rounded-0" type="submit">
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill"

@@ -1,4 +1,4 @@
-<!-- LOGIKEN MED METODER TILL CART - LÄGGA TILL, TA BORT OSV.  -->
+
 
 <?php
 require_once("Models/cart_item.php");

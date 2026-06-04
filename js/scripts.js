@@ -20,7 +20,12 @@ if (sortSelect) {
 
 async function addToCart(productId) {
   try {
-    const resp = await fetch(`/javascriptAddToCart?id=${productId}`);
+    const resp = await fetch(`/javascriptAddToCart?id=${productId}`, {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
 
     if (!resp.ok) {
       return;
@@ -30,6 +35,11 @@ async function addToCart(productId) {
 
     if (!data.success) {
       return;
+    }
+
+    const cartCountElement = document.getElementById("cartItemCount");
+    if (cartCountElement && typeof data.cartItemCount !== "undefined") {
+      cartCountElement.innerText = data.cartItemCount;
     }
 
     drawCart(data.cartItems || [], data.cartTotalPrice, data.cartItemCount);
@@ -110,7 +120,12 @@ function drawCart(cartItems, cartTotalPrice, cartItemCount) {
 
 async function fetchCartItems() {
   try {
-    const resp = await fetch("/javascriptFetchCart");
+    const resp = await fetch("/javascriptFetchCart", {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
     const data = await resp.json();
     if (data.success) {
       drawCart(data.cartItems || [], data.cartTotalPrice, data.cartItemCount);
@@ -123,7 +138,12 @@ async function fetchCartItems() {
 
 async function removeFromCart(productId) {
   try {
-    const resp = await fetch(`/javascriptRemoveFromCart?id=${productId}`);
+    const resp = await fetch(`/javascriptRemoveFromCart?id=${productId}`, {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
 
     if (!resp.ok) {
       return;
@@ -133,6 +153,11 @@ async function removeFromCart(productId) {
 
     if (!data.success) {
       return;
+    }
+
+    const cartCountElement = document.getElementById("cartItemCount");
+    if (cartCountElement && typeof data.cartItemCount !== "undefined") {
+      cartCountElement.innerText = data.cartItemCount;
     }
 
     drawCart(data.cartItems || [], data.cartTotalPrice, data.cartItemCount);

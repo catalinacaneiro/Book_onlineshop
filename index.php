@@ -48,6 +48,12 @@ $router->addRoute('/removeFromCart', function () {
 $router->addRoute('/viewCart', function () {
     require_once(__DIR__ . '/pages/viewCart.php');
 });
+$router->addRoute('/checkout', function () {
+    require_once(__DIR__ . '/pages/checkout.php');
+});
+$router->addRoute('/checkoutSuccess', function () {
+    require_once(__DIR__ . '/pages/checkoutSuccess.php');
+});
 $router->addRoute('/javascriptAddToCart', function () {
     require_once(__DIR__ . '/api/addToCart.php');
 });
