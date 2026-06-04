@@ -3,9 +3,9 @@ require_once(__DIR__ . '/../config/database.php');
 require_once(__DIR__ . '/../Models/cart.php');
 require_once(__DIR__ . '/../repositories/cartRepository.php');
 
-$productIdAddToCart = $_GET['id'] ?? null;
+$productIdToRemove = $_GET['id'] ?? null;
 
-if ($productIdAddToCart === null) {
+if ($productIdToRemove === null) {
     header('Content-Type: application/json');
     echo json_encode([
         'success' => false,
@@ -17,16 +17,13 @@ if ($productIdAddToCart === null) {
 $db = new Database();
 $cartRepository = new CartRepository($db->pdo);
 $cart = new Cart($cartRepository, session_id());
-
-$cart->addItem($productIdAddToCart, 1);
+$cart->removeItem($productIdToRemove, 1);
 
 header('Content-Type: application/json');
 echo json_encode([
     'success' => true,
-    'message' => "Product $productIdAddToCart added to cart",
+    'message' => "Product $productIdToRemove removed from cart",
     'cartItemCount' => $cart->getItemsCount(),
     'cartTotalPrice' => $cart->getTotalPrice(),
     'cartItems' => $cart->getItems(),
-
 ]);
-?>

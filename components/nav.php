@@ -2,6 +2,8 @@
 require_once("config/database.php");
 require_once("repositories/ProductRepository.php");
 require_once("repositories/CategoryRepository.php");
+require_once("repositories/cartRepository.php");
+require_once("Models/cart.php");
 
 
 $db = new Database();
@@ -9,6 +11,12 @@ $productRepo = new ProductRepository($db->pdo);
 $categoryRepo = new CategoryRepository($db->pdo);
 $allProducts = $productRepo->getAllProducts();
 $allCategories = $categoryRepo->getAllCategories();
+
+if (!isset($antalICarten)) {
+    $cartRepository = new CartRepository($db->pdo);
+    $cart = new Cart($cartRepository, session_id());
+    $antalICarten = $cart->getItemsCount();
+}
 
 ?>
 
@@ -38,7 +46,8 @@ $allCategories = $categoryRepo->getAllCategories();
                 <form class="d-flex">
                     <button class="btn btn-outline-dark rounded-0" type="submit">
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"
+                            id="cartItemCount"><?php echo $antalICarten; ?></span>
                     </button>
                 </form>
             </div>
@@ -64,7 +73,7 @@ $allCategories = $categoryRepo->getAllCategories();
                                     <?php echo $category->category_name; ?>
                                 </a>
                             </li>
-                        <?php
+                            <?php
                         }
                         ?>
                     </ul>

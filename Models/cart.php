@@ -22,6 +22,7 @@ class Cart
         $this->cartItems = $this->cartRepository->getCartItems($user_id, $session_id);
     }
 
+    
     public function addItem($product_id, $quantity)
     {
         $item = $this->getCartItem($product_id);
@@ -133,6 +134,7 @@ class Cart
     $this->user_id = $user_id;
     $this->session_id = $newSessionId;
 }
+
 
 }
 ?>

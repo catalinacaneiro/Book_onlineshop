@@ -58,7 +58,10 @@ if ($productId) {
                 <p>In stock: <?php echo $product->stock_quantity; ?></p>
 
                 <div class="product-actions">
-                    <a class="btn btn-outline-dark" onclick="addToCart(<?php echo $product->id; ?>)">Add to cart</a>
+                    <a class="btn btn-outline-dark"
+                        href="/addToCart?id=<?php echo urlencode((string) $product->id); ?>&fromPage=<?php echo urlencode($_SERVER['REQUEST_URI'] ?? '/product'); ?>"
+                        onclick="if (typeof addToCart === 'function') { addToCart(<?php echo $product->id; ?>); return false; }">Add
+                        to cart</a>
                     <a class="category-back btn btn-outline-dark"
                         href="/category?id=<?php echo $product->category_id; ?>">Back to category</a>
                 </div>

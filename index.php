@@ -48,5 +48,14 @@ $router->addRoute('/removeFromCart', function () {
 $router->addRoute('/viewCart', function () {
     require_once(__DIR__ . '/pages/viewCart.php');
 });
+$router->addRoute('/javascriptAddToCart', function () {
+    require_once(__DIR__ . '/api/addToCart.php');
+});
+$router->addRoute('/javascriptRemoveFromCart', function () {
+    require_once(__DIR__ . '/api/removeFromCart.php');
+});
+$router->addRoute('/javascriptFetchCart', function () {
+    require_once(__DIR__ . '/api/fetchCart.php');
+});
 
 $router->dispatch();
