@@ -9,5 +9,6 @@ class Product{
     public $popularity_product; 
     public $description; 
     public $img; 
+    public $weight_kg; 
 }
 ?>

@@ -63,5 +63,9 @@ $router->addRoute('/javascriptRemoveFromCart', function () {
 $router->addRoute('/javascriptFetchCart', function () {
     require_once(__DIR__ . '/api/fetchCart.php');
 });
+$router->addRoute('/readfreightrules', function () {
+    require_once(__DIR__ . '/integrations/readfreightrules.php');
+});
+
 
 $router->dispatch();

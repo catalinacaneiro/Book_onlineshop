@@ -94,6 +94,8 @@ $cartTotal = $cart->getTotalPrice();
                 </div>
             </div>
 
+            
+
             <aside class="cart-summary" aria-label="Basket totals">
                 <h2>Basket totals</h2>
                 <div class="cart-summary-line">

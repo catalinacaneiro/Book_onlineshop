@@ -14,7 +14,7 @@ class ProductRepository
     function getAllProducts(): array
     {
         $query = $this->pdo->query(
-            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, p.weight_kg, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id ORDER BY p.price DESC"
         );
 
         $products = $query->fetchAll(PDO::FETCH_CLASS, "Product");
@@ -33,7 +33,7 @@ class ProductRepository
         }
 
         $query = $this->pdo->query(
-            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, p.weight_kg, c.category_name
              FROM products p
              LEFT JOIN category c ON c.id = p.category_id
              ORDER BY p.$sort $order"
@@ -45,7 +45,7 @@ class ProductRepository
 
     function getProduct($id): Product
     {
-        $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
+        $prep = $this->pdo->prepare("SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, p.weight_kg, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id WHERE p.id = :id LIMIT 1"); //kolla upp LIMIT
 
         $prep->setFetchMode(PDO::FETCH_CLASS, "Product");
         $prep->execute(["id" => $id]);
@@ -55,22 +55,23 @@ class ProductRepository
 
     function getProductByTitle($title): ?Product
     {
-        $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
+        $prep = $this->pdo->prepare('SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, p.weight_kg, c.category_name FROM products p LEFT JOIN category c ON c.id = p.category_id  WHERE p.title=:title');
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
         $prep->execute(['title' => $title]);
         return $prep->fetch();
     }
 
-    function addProduct($title, $price, $stock_quantity, $category_id, $description = '')
+    function addProduct($title, $price, $stock_quantity, $category_id, $description = '', $weight_kg = null)
     {
-        $prep = $this->pdo->prepare("INSERT INTO products (title, price, stock_quantity, category_id, description) VALUES (:title, :price, :stock_quantity, :category_id, :description)");
+        $prep = $this->pdo->prepare("INSERT INTO products (title, price, stock_quantity, category_id, description, weight_kg) VALUES (:title, :price, :stock_quantity, :category_id, :description, :weight_kg)");
 
         $prep->execute([
             "title" => $title,
             "price" => $price,
             "stock_quantity" => $stock_quantity,
             "category_id" => $category_id,
-            "description" => (string) $description
+            "description" => (string) $description,
+            "weight_kg" => $weight_kg
         ]);
 
         return $this->pdo->lastInsertId();
@@ -92,7 +93,7 @@ class ProductRepository
         }
 
         $query = $this->pdo->prepare(
-            "SELECT id, category_id, description, title, price, stock_quantity, img 
+            "SELECT id, category_id, description, title, price, stock_quantity, img, weight_kg 
             FROM products 
             WHERE category_id = :category_id ORDER BY $sort $order"
         );
@@ -107,7 +108,7 @@ class ProductRepository
     function searchBooks($q): array
     {
         $prep = $this->pdo->prepare(
-            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, c.category_name
+            "SELECT p.id, p.title, p.stock_quantity, p.price, p.category_id, p.popularity_product, p.description, p.img, p.weight_kg, c.category_name
              FROM products p
              LEFT JOIN category c ON c.id = p.category_id
              WHERE p.title LIKE :q OR p.description LIKE :q OR c.category_name LIKE :q
@@ -128,39 +129,41 @@ class ProductRepository
     function createProduct($product)
     {
         // INSERT INTO
-        $query = $this->pdo->prepare("INSERT INTO products (title, price, stock_quantity, category_id, description) VALUES (:title, :price, :stock_quantity, :category_id, :description)");
+        $query = $this->pdo->prepare("INSERT INTO products (title, price, stock_quantity, category_id, description, weight_kg) VALUES (:title, :price, :stock_quantity, :category_id, :description, :weight_kg)");
         $query->execute([
             'title' => $product->title,
             'price' => $product->price,
             'stock_quantity' => $product->stock_quantity,
             'category_id' => $product->category_id,
-            'description' => $product->description
+            'description' => $product->description,
+            'weight_kg' => $product->weight_kg
         ]);
     }
 
     function saveProduct($product)
     {
-        $query = $this->pdo->prepare("UPDATE products SET title=:title, description=:description, price=:price, stock_quantity=:stock_quantity, category_id=:category_id WHERE id=:id");
+        $query = $this->pdo->prepare("UPDATE products SET title=:title, description=:description, price=:price, stock_quantity=:stock_quantity, category_id=:category_id, weight_kg=:weight_kg WHERE id=:id");
         $query->execute([
             'title' => $product->title,
             'price' => $product->price,
             'stock_quantity' => $product->stock_quantity,
             'category_id' => $product->category_id,
             'id' => $product->id,
-            'description' => $product->description
+            'description' => $product->description,
+            'weight_kg' => $product->weight_kg
         ]);
     }
 
-    function deleteProduct($id) 
+    function deleteProduct($id)
     {
         $query = $this->pdo->prepare(
-        "DELETE FROM products 
+            "DELETE FROM products 
         WHERE id =:id"
         );
         $query->execute(([
             'id' => $id
         ]));
-        return; 
+        return;
     }
 
 

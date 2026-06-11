@@ -27,6 +27,19 @@ foreach ($cart->getItems() as $cartItem) {
     ]);
 }
 
+array_push($lineitems, [
+    "quantity" => 1,
+    "price_data" => [
+        "currency" => "sek",
+        "unit_amount" => 500, 
+        "product_data" => [
+            "name" => "Fraktkostnad"
+        ]
+    ]
+]);
+
+//stoppa in en till lineitem som är fraktkostnaden 
+
 $checkout_session = \Stripe\Checkout\Session::create([
     "mode" => "payment",
     "success_url" => "http://localhost:8000/checkoutSuccess?session_id={CHECKOUT_SESSION_ID}",
