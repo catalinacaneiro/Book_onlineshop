@@ -29,9 +29,9 @@ if (!in_array($order, ['asc', 'desc'], true)) {
 }
 
 $selectedOption = $sort . '-' . $order;
-// select * from category where id=$categoryid
-$products = $productRepo->getProductsForCategory($category_id, $sort, $order);
-// select * from products where category_id=$categoryId
+
+$products = $productRepo->getProductsForCategory($categoryid, $sort, $order);
+
 $allCategories = $categoryRepo->getAllCategories();
 
 ?>

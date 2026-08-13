@@ -100,7 +100,7 @@ $cartTotal = $cart->getTotalPrice();
                 <h2>Basket totals</h2>
                 <div class="cart-summary-line">
                     <span>Shipment</span>
-                    <span>Shipping costs are calculated during checkout.</span>
+                    
                 </div>
                 <div class="cart-summary-line cart-summary-total">
                     <span>Total</span>
