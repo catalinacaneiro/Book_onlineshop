@@ -18,15 +18,22 @@ $db = new Database();
 $cartRepository = new CartRepository($db->pdo);
 $cart = new Cart($cartRepository, session_id());
 
-$cart->addItem($productIdAddToCart, 1);
+try {
+    $cart->addItem($productIdAddToCart, 1);
 
-header('Content-Type: application/json');
-echo json_encode([
-    'success' => true,
-    'message' => "Product $productIdAddToCart added to cart",
-    'cartItemCount' => $cart->getItemsCount(),
-    'cartTotalPrice' => $cart->getTotalPrice(),
-    'cartItems' => $cart->getItems(),
-
-]);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => true,
+        'message' => "Product $productIdAddToCart added to cart",
+        'cartItemCount' => $cart->getItemsCount(),
+        'cartTotalPrice' => $cart->getTotalPrice(),
+        'cartItems' => $cart->getItems(),
+    ]);
+} catch (Exception $e) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
+}
 ?>

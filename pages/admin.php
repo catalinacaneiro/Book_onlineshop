@@ -25,6 +25,13 @@
     $db = new Database();
     $productRepo = new ProductRepository($db->pdo);
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+        $id = (int) $_POST['delete_id']; 
+        $productRepo->deleteProduct($id); 
+        header("Location: /admin");
+        exit; 
+    }
+
     $sortorder = $_GET['sortorder'] ?? 'title-asc';
     [$sort, $order] = array_pad(explode('-', $sortorder, 2), 2, null);
     $sort = $sort ?? 'title';
@@ -96,6 +103,7 @@
                         <th>Price</th>
                         <th>Stock</th>
                         <th>Edit</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -107,11 +115,17 @@
                             <td><?php echo htmlspecialchars(($product->price)); ?></td>
                             <td><?php echo htmlspecialchars(($product->stock_quantity)); ?></td>
                             <td>
-                                <a href="/admin/edit?id=<?php echo $product->id; ?>" class="btn btn-primary">Edit</a>
+                                <a href="/admin/edit?id=<?php echo $product->id; ?>" class="ategory-back btn btn-outline-dark">Edit</a>
                             </td>
 
                             <td>
-                                <a href="/admin/new" class="btn btn-primary">Create new product</a>
+                                <a href="/admin/new" class="ategory-back btn btn-outline-dark">Create new product</a>
+                            </td>
+                            <td>
+                                <form method="post" action="/admin" onsubmit="return confirm('Are you sure you want to remove this product?');">
+                                    <input type="hidden" name="delete_id" value="<?php echo (int)$product->id; ?>">
+                                    <button type="submit" class="ategory-back btn btn-outline-dark">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     <?php } ?>

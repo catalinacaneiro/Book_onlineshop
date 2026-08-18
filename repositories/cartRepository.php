@@ -5,6 +5,20 @@ class CartRepository
 {
     private PDO $pdo;
 
+
+    public function getProductById($product_id)
+{
+    $query = $this->pdo->prepare("
+        SELECT id, title, stock_quantity, price
+        FROM products
+        WHERE id = :id
+    ");
+
+    $query->execute(['id' => $product_id]);
+
+    return $query->fetch(PDO::FETCH_OBJ);
+}
+
     function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;

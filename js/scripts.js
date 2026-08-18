@@ -34,6 +34,7 @@ async function addToCart(productId) {
     const data = await resp.json();
 
     if (!data.success) {
+      alert(data.message || "Could not add the item to the cart.");
       return;
     }
 

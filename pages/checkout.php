@@ -11,6 +11,24 @@ $cartRepository = new CartRepository($db->getPdo());
 $cart = new Cart($cartRepository, session_id());
 $cartItems = $cart->getItems();
 
+foreach ($cartItems as $cartItem) {
+    $query = $db->getPdo()->prepare("
+    UPDATE products
+    SET stock_quantity = stock_quantity - :qty
+    WHERE id = :product_id
+    AND stock_quantity >= :qty
+    "); 
+
+    $query->execute([
+        'qty' => $cartItem->quantity,
+        'product_id' => $cartItem->product_id
+    ]);
+
+    if ($query->rowCount() !== 1){
+        throw new Exception("One or more products are out of stock or have insufficient stock.");
+    }
+}
+
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_PRIVATE_KEY']);
 
 $lineitems = [];

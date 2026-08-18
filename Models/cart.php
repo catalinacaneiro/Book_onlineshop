@@ -27,6 +27,24 @@ class Cart
     {
         $item = $this->getCartItem($product_id);
 
+        $currentInCart = 0; 
+        if ($item) {
+            $currentInCart = $item->quantity; 
+        }
+
+        $product = $this->cartRepository->getProductById($product_id);
+
+        if (!$product) {
+            throw new Exception(("Product is out of stock")); 
+        }
+
+        $available = $product->stock_quantity - $currentInCart; 
+
+        if ($quantity > $available) {
+            throw new Exception("You can only add " . $available . " st.");
+        }
+
+
         if (!$item) {
             $item = new CartItem();
 
