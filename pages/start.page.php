@@ -3,11 +3,14 @@
 require_once("repositories/ProductRepository.php");
 require_once("repositories/CategoryRepository.php");
 
+
 $db = new Database();
 $productRepo = new ProductRepository($db->pdo);
 $categoryRepo = new CategoryRepository($db->pdo);
 $popularProduct = $productRepo->getPopularProducts();
 $allCategories = $categoryRepo->getAllCategories();
+
+
 ?>
 
 <!DOCTYPE html>
