@@ -95,7 +95,7 @@ class Validator
     /**
      * set_response_messages - Function to set/extend custom error response messages.
      * 
-     * @param array $mesages
+     * @param array $messages
      * @return void
      */
     function set_response_messages($messages)
@@ -110,7 +110,7 @@ class Validator
      * 
      * @param string $name - Name of the field/key as on data to validate.
      * @param string $alias - (optional) Alias use on error messages instead of field name.
-     * @return this
+     * @return $this
      */
     function field($name, $alias = null)
     {
@@ -123,7 +123,7 @@ class Validator
     /**
      * required - Check if the value exists.
      * 
-     * @return this
+     * @return $this
      */
     function required()
     {
@@ -138,7 +138,7 @@ class Validator
      * alpha - Check if the value is alpha only.
      * 
      * @param array $ignore - (Optional) add charectors to allow.
-     * @return this
+     * @return $this
      */
     function alpha($ignore = [])
     {
@@ -153,7 +153,7 @@ class Validator
      * alpha_num - Check if the value is alpha numeric only.
      * 
      * @param array $ignore - (Optional) add charectors to allow.
-     * @return this
+     * @return $this
      */
     function alpha_num($ignore = [])
     {
@@ -167,7 +167,7 @@ class Validator
     /**
      * numeric - Check if the value is numeric only.
      * 
-     * @return this
+     * @return $this
      */
     function numeric()
     {
@@ -181,7 +181,7 @@ class Validator
     /**
      * email - Check if the value is a valid email.
      * 
-     * @return this
+     * @return $this
      */
     function email()
     {
@@ -196,7 +196,7 @@ class Validator
      * max_len - Check if length of the value is larger than the limit.
      * 
      * @param int $size - Max length of charectors of the value.
-     * @return this
+     * @return $this
      */
     function max_len($size)
     {
@@ -211,7 +211,7 @@ class Validator
      * min_len - Check if length of the value is smaller than the limit.
      * 
      * @param int $size - Min length of charectors of the value.
-     * @return this
+     * @return $this
      */
     function min_len($size)
     {
@@ -226,7 +226,7 @@ class Validator
      * max_val - Check if the value of intiger/number is not larger than limit.
      * 
      * @param int $val - Max value of the number.
-     * @return this
+     * @return $this
      */
     function max_val($val)
     {
@@ -241,7 +241,7 @@ class Validator
      * min_val - Check if the value of intiger/number is not smaller than limit.
      * 
      * @param int $val - Min value of the number.
-     * @return this
+     * @return $this
      */
     function min_val($val)
     {
@@ -256,7 +256,7 @@ class Validator
      * enum - Check if the value is in the list.
      * 
      * @param array $list - List of valid values.
-     * @return this
+     * @return $this
      */
     function enum($list)
     {
@@ -271,7 +271,7 @@ class Validator
      * equals - Check if the value is equal.
      * 
      * @param mixed $value - Value to match equal.
-     * @return this
+     * @return $this
      */
     function equals($value)
     {
@@ -286,7 +286,7 @@ class Validator
      * date - Check if the value is a valid date.
      * 
      * @param mixed $format - format of the date. (ex. Y-m-d) Check out https://www.php.net/manual/en/datetime.format.php for more.
-     * @return this
+     * @return $this
      */
     function date($format = 'Y-m-d')
     {
@@ -304,7 +304,7 @@ class Validator
      * date_after - Check if the date appeared after the specified date.
      * 
      * @param mixed $date - Use format Y-m-d (ex. 2023-01-15).
-     * @return this
+     * @return $this
      */
     function date_after($date)
     {
@@ -319,7 +319,7 @@ class Validator
      * date_before - Check if the date appeared before the specified date.
      * 
      * @param mixed $date - Use format Y-m-d (ex. 2023-01-15).
-     * @return this
+     * @return $this
      */
     function date_before($date)
     {
@@ -334,7 +334,7 @@ class Validator
      * must_contain - Check if the value must contains some charectors.
      * 
      * @param string $chars - Set of chars in one string ex. "@#$&abc123".
-     * @return this
+     * @return $this
      */
     function must_contain($chars)
     {
@@ -349,7 +349,7 @@ class Validator
      * match - Check if the value matchs a pattern.
      * 
      * @param string $patarn - Rejex pattern to match.
-     * @return this
+     * @return $this
      */
     function match($patarn)
     {

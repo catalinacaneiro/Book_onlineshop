@@ -79,7 +79,7 @@ if (!isset($antalICarten)) {
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Create account</a></li>
+                <li class="nav-item"><a class="nav-link" href="/createAccount">Create account</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
             </ul>
         </div>

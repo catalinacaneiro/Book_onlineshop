@@ -45,7 +45,27 @@ class UserRepository
     }
 }
 
+ function addUser($email, $password, $username)
+{
+    try {
+        $userId = $this->auth->register(
+            $email,
+            $password,
+            $username
+        );
 
+        return $userId;
+    }
+    catch (\Delight\Auth\InvalidEmailException $e) {
+        echo "Ivalid email adress";
+    }
+    catch (\Delight\Auth\InvalidPasswordException $e) {
+        echo "Invalid password";
+    }
+    catch (\Delight\Auth\UserAlreadyExistsException $e) {
+        echo "User already exists";
+    }
+}
 
 
 }
