@@ -11782,3 +11782,41 @@ fieldset:disabled .btn {
     font-size: 1.25rem;
   }
 }
+
+.logout-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  padding: 2rem 1rem;
+}
+
+.logout-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.logout-message {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  color: #1f1f1f;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: logoutFadeIn 0.9s ease-out forwards;
+}
+
+@keyframes logoutFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

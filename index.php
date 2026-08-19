@@ -69,6 +69,13 @@ $router->addRoute('/readfreightrules', function () {
 $router->addRoute('/createAccount', function () {
     require_once(__DIR__ . '/pages/createAccount.php');
 });
+$router->addRoute('/login', function () {
+    require_once(__DIR__ . '/pages/login.php');
+});
+$router->addRoute('/logout', function () {
+    require_once(__DIR__ . '/pages/logout.php');
+});
+
 
 
 $router->dispatch();

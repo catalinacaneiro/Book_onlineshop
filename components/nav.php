@@ -4,9 +4,14 @@ require_once("repositories/ProductRepository.php");
 require_once("repositories/CategoryRepository.php");
 require_once("repositories/cartRepository.php");
 require_once("Models/cart.php");
+require_once("repositories/userRepository.php");
 
 
 $db = new Database();
+
+$userRepo = new UserRepository($db->pdo);
+$auth = $userRepo->getAuth();
+
 $productRepo = new ProductRepository($db->pdo);
 $categoryRepo = new CategoryRepository($db->pdo);
 $allProducts = $productRepo->getAllProducts();
@@ -43,7 +48,7 @@ if (!isset($antalICarten)) {
                     </div>
                 </form>
                 <!-- VARUKORG - form -->
-                <form class="d-flex" method="get" action="/viewCart" >
+                <form class="d-flex" method="get" action="/viewCart">
                     <button class="btn btn-outline-dark rounded-0" type="submit">
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill"
@@ -78,9 +83,39 @@ if (!isset($antalICarten)) {
                         ?>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#!">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="/createAccount">Create account</a></li>
-                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+
+                <?php if ($auth->isLoggedIn()): ?>
+
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            Welcome <?= htmlspecialchars($auth->getUsername()) ?>
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <form method="POST" action="/logout">
+                            <button type="submit" class="nav-link btn btn-link border-0 p-2">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+
+                <?php else: ?>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/createAccount">Create account</a>
+                    </li>
+
+                <?php endif; ?>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+            
             </ul>
         </div>
     </div>

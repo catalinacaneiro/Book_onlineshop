@@ -67,5 +67,22 @@ class UserRepository
     }
 }
 
+function loginUser($email, $password)
+{
+    try {
+        $this->auth->login(
+            $email,
+            $password
+        );
+        return true; 
+    }catch (\Delight\Auth\InvalidEmailException $e) {
+        throw new Exception("Wrong email adress");
+    }catch (\Delight\Auth\InvalidOneTimePasswordException $e) {
+        throw new Exception("Wrong password");
+    }
+}
 
+function logoutUser(){
+    $this->auth->logOut();
+}
 }
