@@ -1,0 +1,76 @@
+Online shop built in PHP with a custom router, product catalog, shopping cart, authentication, checkout flow, freight rules, and Prisjakt XML export. The project includes a MySQL database schema and seed data for demo products and shipping zones.
+
+Features
+Product listing with category filtering
+Product detail page
+Shopping cart with add/remove functionality
+User registration and login
+Order checkout flow
+Freight calculation based on shipping zones
+Database-driven product and category data
+Prisjakt product feed export in XML format
+MySQL schema and seed data included
+Tech Stack
+PHP
+MySQL
+PDO
+Composer
+Custom routing
+XML generation for Prisjakt feed
+Project Structure
+api/ — API endpoints and XML feed
+assets/ — images and static assets
+components/ — reusable UI components
+config/ — database and app configuration
+DB/ — database schema and seed files
+Models/ — domain models
+pages/ — page controllers/views
+repositories/ — database access logic
+utils/ — helper classes and router
+css/ — styling
+js/ — frontend scripts
+Requirements
+Before running the project, make sure you have:
+
+PHP 8+
+MySQL or MariaDB
+Composer
+A local web server or PHP built-in server
+Database Setup
+Create a MySQL database.
+
+Import the schema file:
+mysql -u root -p your_database < schema.sql
+
+Import the seed data:
+mysql -u root -p your_database < seed.sql
+
+Environment Configuration
+Create a .env file in the project root and add the following values:
+
+DATABASE_HOST=localhost
+DATABASE_NAME=book_shop
+DATABASE_USER=root
+DATABASE_PASSWORD=your_password
+DATABASE_PORT=3306
+
+Do not commit real credentials to GitHub. Use local values only or add a .env.example if needed.
+
+Run the Project
+From the project root, start the PHP development server:
+
+php -S localhost:8000 index.php
+
+Then open:
+
+http://localhost:8000
+
+Prisjakt Feed
+The project includes a feed at:
+
+http://localhost:8000/prisjakt.xml
+
+This export generates XML for product listings and supports product image metadata.
+
+Notes
+This project is designed as a learning project and uses custom PHP routing instead of a framework. The database schema and seed data are included for easy setup and testing.
