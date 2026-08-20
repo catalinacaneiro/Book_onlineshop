@@ -116,7 +116,7 @@ class ProductRepository
         );
 
         $prep->execute(['q' => '%' . $q . '%']);
-        return $prep->fetchAll(PDO::FETCH_CLASS, "Product");
+        return $prep->fetchAll(PDO::FETCH_CLASS, Product::class);
     }
 
 

@@ -66,6 +66,9 @@ $router->addRoute('/javascriptFetchCart', function () {
 $router->addRoute('/readfreightrules', function () {
     require_once(__DIR__ . '/integrations/readfreightrules.php');
 });
+$router->addRoute('/prisjakt.xml', function () {
+    require_once(__DIR__ . '/api/prisjakt.php');
+});
 $router->addRoute('/createAccount', function () {
     require_once(__DIR__ . '/pages/createAccount.php');
 });

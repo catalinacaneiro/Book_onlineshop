@@ -94,17 +94,37 @@ $cartTotal = $cart->getTotalPrice();
                 </div>
             </div>
 
-            
+
 
             <aside class="cart-summary" aria-label="Basket totals">
                 <h2>Basket totals</h2>
-                <div class="cart-summary-line">
-                    <span>Shipment</span>
-                    
-                </div>
+
+
+                <label for="currencyFrom" class="form-label">
+                    From
+                </label>
+
+                <select id="currencyFrom" class="form-select mb-3">
+                    <option value="USD" selected>USD</option>
+                    <option value="SEK">SEK</option>
+                    <option value="EUR">EUR</option>
+                </select>
+
+
+                <label for="currencyTo" class="form-label">
+                    To
+                </label>
+
+                <select id="currencyTo" class="form-select mb-3">
+                    <option value="SEK" selected>SEK</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                </select>
                 <div class="cart-summary-line cart-summary-total">
                     <span>Total</span>
-                    <span id="cartTotalPrice">$<?php echo number_format((float) $cartTotal, 0, ",", " "); ?></span>
+                    <span id="cartTotalPrice" data-amount="<?php echo (float) $cartTotal; ?>">
+                        $<?php echo number_format((float) $cartTotal, 0, ",", " "); ?>
+                    </span>
                 </div>
                 <a href="/checkout" class="cart-checkout-btn">Proceed to checkout</a>
             </aside>
@@ -115,6 +135,52 @@ $cartTotal = $cart->getTotalPrice();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/scripts.js"></script>
+
+
+    <script>
+        const APP_ID = "c59f8927e5894eb29b56316d562e85c8";
+        let rates = null;
+
+        const fromEl = document.getElementById("currencyFrom");
+        const toEl = document.getElementById("currencyTo");
+        const totalPriceEl = document.getElementById("cartTotalPrice");
+
+        async function fetchRates() {
+            try {
+                const res = await fetch(`https://openexchangerates.org/api/latest.json?app_id=${APP_ID}`);
+                const data = await res.json();
+
+                if (data.error) {
+                    throw new Error(data.description || "API error");
+                }
+
+                rates = data.rates;
+                calculate();
+            } catch (err) {
+                console.error("Currency API error:", err);
+                if (totalPriceEl) {
+                    totalPriceEl.textContent = "Error";
+                }
+            }
+        }
+
+        function calculate() {
+            if (!rates || !fromEl || !toEl || !totalPriceEl) return;
+            if (!rates[fromEl.value] || !rates[toEl.value]) return;
+
+            const amount = parseFloat(totalPriceEl.dataset.amount || 0);
+            const from = fromEl.value;
+            const to = toEl.value;
+            const converted = amount * (rates[to] / rates[from]);
+
+            totalPriceEl.textContent = `${converted.toFixed(2)} ${to}`;
+        }
+
+        fromEl.addEventListener("change", calculate);
+        toEl.addEventListener("change", calculate);
+
+        fetchRates();
+    </script>
 </body>
 
 </html>
